@@ -1,0 +1,43 @@
+name: macOS CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-check:
+    name: Build and check (macOS)
+    runs-on: macos-15
+    timeout-minutes: 20
+    steps:
+      - name: Check out source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Show Swift version
+        run: swift --version
+      - name: Run core and editing checks
+        run: ./scripts/test.sh
+      - name: Build release app
+        run: ./scripts/build-app.sh
+      - name: Validate app and Xcode project
+        run: |
+          codesign --verify --deep --strict --verbose=2 "dist/拾贴.app"
+          plutil -lint Resources/Info.plist Shitie.xcodeproj/project.pbxproj
+          xcodebuild -project Shitie.xcodeproj -scheme Shitie -configuration Release -destination 'platform=macOS' -derivedDataPath .build/xcode CODE_SIGNING_ALLOWED=NO build
+      - name: Package build
+        run: ditto -c -k --norsrc --noextattr --keepParent "dist/拾贴.app" dist/ShiTie-ci-macOS.zip
+      - name: Upload app
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: ShiTie-macOS-${{ runner.arch }}
+          path: dist/ShiTie-ci-macOS.zip
+          retention-days: 7
+          if-no-files-found: error
