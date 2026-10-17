@@ -1,0 +1,18 @@
+name: Feature request / 功能建议
+description: Explain your use case and desired behavior / 说明使用场景与期望行为
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Use case / 使用场景
+      description: What are you trying to do, and where does the current app fall short?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Suggested behavior / 建议的行为
+      description: Describe the change and any alternatives you have considered.
+    validations:
+      required: true

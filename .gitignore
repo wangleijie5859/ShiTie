@@ -1,0 +1,23 @@
+.build/
+dist/
+.DS_Store
+*.xcuserstate
+xcuserdata/
+
+# Local credentials and clipboard data
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.p8
+*.sqlite
+*.sqlite-*
+*.db
+*.db-*
+
+# Local tooling
+.swiftpm/
+.idea/
+.vscode/

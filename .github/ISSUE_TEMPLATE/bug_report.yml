@@ -1,0 +1,35 @@
+name: Bug report / 问题反馈
+description: Report a reproducible problem using sample data / 用示例数据描述可复现的问题
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: "Please do not attach clipboard databases or personal content. Report vulnerabilities privately. 请勿附上历史数据库或私人内容。"
+  - type: input
+    id: environment
+    attributes:
+      label: Environment / 运行环境
+      description: App version, macOS version, Apple Silicon or Intel, download or source build.
+      placeholder: "ShiTie 1.0.0, macOS 15.7, Apple Silicon, release download"
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce / 复现步骤
+      description: Include sample text only; omit secrets and personal history.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior / 预期行为
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior / 实际行为
+      description: Include the visible error, if any. Screenshots should contain only sample data.
+    validations:
+      required: true
